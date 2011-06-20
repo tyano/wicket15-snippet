@@ -151,7 +151,7 @@ public class RssImageLink extends Panel implements IImageSource {
         return source;
     }
     
-    @EventHandler(payload=ImageRefresh.class)
+    @EventHandler
     public void handleImageRefreshEvent(ImageRefresh<?> refresh) {
         if (Boolean.TRUE.equals(getModelObject())) {
             source = null;

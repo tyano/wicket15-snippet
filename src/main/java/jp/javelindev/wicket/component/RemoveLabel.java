@@ -19,7 +19,7 @@ public class RemoveLabel extends Label {
     }
 
     
-    @EventHandler(payload=RemoveRequest.class)
+    @EventHandler
     public void handleRemove(RemoveRequest request) {
         String newLabel = request.isRemove() ? getString("displayLabel") : getString("removeLabel");
         setDefaultModelObject(newLabel);

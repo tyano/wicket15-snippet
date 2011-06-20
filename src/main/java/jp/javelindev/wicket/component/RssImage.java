@@ -77,7 +77,7 @@ public class RssImage extends AjaxLink<Void> implements IImageSource {
         return source;
     }
     
-    @EventHandler(payload=ImageRefresh.class)
+    @EventHandler
     public void refreshImage(ImageRefresh<?> refresh) {
         if (selected) {
             source = null;

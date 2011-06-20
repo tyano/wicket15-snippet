@@ -17,8 +17,6 @@ package jp.javelindev.wicket.dispatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.wicket.IEventDispatcher;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.event.IEventSink;
@@ -29,6 +27,7 @@ import org.apache.wicket.event.IEventSink;
  */
 public class AnnotationEventDispatcher implements IEventDispatcher {
 
+    @Override
     public void dispatchEvent(IEventSink es, IEvent<?> event) {
         Class<? extends IEventSink> sinkClass = es.getClass().asSubclass(IEventSink.class);
         Object payload = event.getPayload();
@@ -36,10 +35,9 @@ public class AnnotationEventDispatcher implements IEventDispatcher {
         
         if (payload != null) {
             for (Method method : sinkClass.getMethods()) {
-                EventHandler handlerAnnotation = method.getAnnotation(EventHandler.class);
-                if (handlerAnnotation != null) {
-                    Class<?> targetClass = handlerAnnotation.payload();
-                    if(targetClass.isAssignableFrom(payloadClass)) {
+                if (method.isAnnotationPresent(EventHandler.class)) {
+                    Class<?>[] paramTypes = method.getParameterTypes();
+                    if(paramTypes.length == 1 && paramTypes[0].isAssignableFrom(payloadClass)) {
                         try {
                             method.invoke(es, payload);
                         } catch (IllegalAccessException ex) {
