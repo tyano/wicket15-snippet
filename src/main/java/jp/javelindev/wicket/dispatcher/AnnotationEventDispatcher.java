@@ -17,9 +17,9 @@ package jp.javelindev.wicket.dispatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import org.apache.wicket.Component;
 import org.apache.wicket.IEventDispatcher;
 import org.apache.wicket.event.IEvent;
-import org.apache.wicket.event.IEventSink;
 
 /**
  *
@@ -28,8 +28,8 @@ import org.apache.wicket.event.IEventSink;
 public class AnnotationEventDispatcher implements IEventDispatcher {
 
     @Override
-    public void dispatchEvent(IEventSink es, IEvent<?> event) {
-        Class<? extends IEventSink> sinkClass = es.getClass().asSubclass(IEventSink.class);
+    public void dispatchEvent(Object sink, IEvent<?> event, Component component) {
+        Class<?> sinkClass = sink.getClass();
         Object payload = event.getPayload();
         Class<?> payloadClass = payload.getClass();
         
@@ -39,7 +39,7 @@ public class AnnotationEventDispatcher implements IEventDispatcher {
                     Class<?>[] paramTypes = method.getParameterTypes();
                     if(paramTypes.length == 1 && paramTypes[0].isAssignableFrom(payloadClass)) {
                         try {
-                            method.invoke(es, payload);
+                            method.invoke(sink, payload);
                         } catch (IllegalAccessException ex) {
                             throw new IllegalStateException("Could not access to the method. EventHandler must be a public method.", ex);
                         } catch (InvocationTargetException ex) {

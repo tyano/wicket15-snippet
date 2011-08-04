@@ -17,12 +17,6 @@
 package jp.javelindev.wicket.resource;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Locale;
-import org.apache.wicket.request.IRequestParameters;
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.request.http.WebRequest;
-import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.resource.loader.ClassStringResourceLoader;
@@ -37,14 +31,14 @@ import org.slf4j.LoggerFactory;
 public class SimpleTextResource extends ByteArrayResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleTextResource.class);
     
-    private SimpleTextResource(String contentType, byte[] array, Locale locale) {
-        super(contentType, array, locale);
+    private SimpleTextResource(String contentType, byte[] array) {
+        super(contentType, array);
     }
 
     public static SimpleTextResource create() {
         try {
             String text = new ClassStringResourceLoader(SimpleTextResource.class).loadStringResource(SimpleTextResource.class, "text", null, null, null);
-            return new SimpleTextResource("text/plain", text.getBytes("Shift_JIS"), null);
+            return new SimpleTextResource("text/plain", text.getBytes("Shift_JIS"));
         } catch (UnsupportedEncodingException ex) {
             throw new IllegalStateException("unsupported encoding: Shift_JIS", ex);
         }

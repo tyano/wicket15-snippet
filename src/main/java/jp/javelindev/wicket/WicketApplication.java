@@ -1,5 +1,6 @@
 package jp.javelindev.wicket;
 
+import jp.javelindev.wicket.ajaxlist.AjaxListPage;
 import jp.javelindev.wicket.dispatcher.AnnotationEventDispatcher;
 import jp.javelindev.wicket.page.CheckerBoardPage;
 import jp.javelindev.wicket.page.Index;
@@ -42,6 +43,7 @@ public class WicketApplication extends WebApplication implements Rss
         mountPage("/index", Index.class);
         mountPage("/home/${name}/address/${address}", HomePage.class);
         mountPage("/checkerboard", CheckerBoardPage.class);
+        mountPage("/ajaxlist", AjaxListPage.class);
         
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
