@@ -19,18 +19,17 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>1.5-RC5.1</wicket.version>
+		<wicket.version>1.5.1</wicket.version>
 		<jetty.version>7.3.0.v20110203</jetty.version>
 	 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	 <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
 	</properties>
-	<dependencies>
+	<dependencies> 
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
-			<artifactId>wicket</artifactId>
+			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
-			<type>pom</type>
 		</dependency>
 		<!-- OPTIONAL DEPENDENCY
 		<dependency>
