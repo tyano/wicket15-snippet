@@ -1,4 +1,4 @@
 target
 src/main/webapp/WEB-INF/glassfish-web.xml
 nbactions.xml
-
+nb-configuration.xml
