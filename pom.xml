@@ -19,25 +19,23 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>1.5.1</wicket.version>
+		<wicket.version>1.5.3</wicket.version>
 		<jetty.version>7.3.0.v20110203</jetty.version>
 	 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	 <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
 	</properties>
-	<dependencies> 
+	<dependencies>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-		<!-- OPTIONAL DEPENDENCY
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
 			<version>${wicket.version}</version>
 		</dependency>
-		-->
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
@@ -66,7 +64,7 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
-        
+
         <dependency>
             <groupId>net.java.dev.rome</groupId>
             <artifactId>rome-fetcher</artifactId>
@@ -88,7 +86,7 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.6.1</version>
             <type>jar</type>
-        </dependency>        
+        </dependency>
 	</dependencies>
 	<build>
 		<resources>

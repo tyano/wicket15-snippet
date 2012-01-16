@@ -3,6 +3,7 @@ package jp.javelindev.wicket;
 import jp.javelindev.wicket.ajaxlist.AjaxListPage;
 import jp.javelindev.wicket.bookmarkable.SamplePage;
 import jp.javelindev.wicket.dispatcher.AnnotationEventDispatcher;
+import jp.javelindev.wicket.form.FormPage;
 import jp.javelindev.wicket.page.CheckerBoardPage;
 import jp.javelindev.wicket.page.Index;
 import jp.javelindev.wicket.resource.SimpleTextResource;
@@ -47,6 +48,7 @@ public class WicketApplication extends WebApplication implements Rss
         mountPage("/checkerboard", CheckerBoardPage.class);
         mountPage("/ajaxlist", AjaxListPage.class);
         mountPage("/bookmarkable", SamplePage.class);
+        mountPage("/form", FormPage.class);
         
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
@@ -69,5 +71,7 @@ public class WicketApplication extends WebApplication implements Rss
     
     public static WicketApplication get() {
         return (WicketApplication)Application.get();
-    }    
+    }
+
+    
 }
