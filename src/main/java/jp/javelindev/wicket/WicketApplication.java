@@ -34,7 +34,7 @@ public class WicketApplication extends WebApplication implements Rss {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return FormPage.class;
+        return RepeatPage.class;
     }
 
     /**

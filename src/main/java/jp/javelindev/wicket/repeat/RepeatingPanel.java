@@ -75,7 +75,6 @@ public class RepeatingPanel extends Panel {
         add(next);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
-//        container.setOutputMarkupPlaceholderTag(true);
         container.setOutputMarkupId(true);
         add(container);
 
