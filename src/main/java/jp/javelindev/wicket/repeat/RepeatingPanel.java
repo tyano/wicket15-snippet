@@ -56,14 +56,7 @@ public class RepeatingPanel extends Panel {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onInitialize() {
-                super.onInitialize();
-                setReuseItems(true);
-            }
-
-            @Override
             protected void populateItem(final ListItem<String> item) {
-                item.setOutputMarkupId(true);
                 item.add(new Label("content", item.getModelObject().toString()));
             }
         });
@@ -89,7 +82,6 @@ public class RepeatingPanel extends Panel {
                 target.add(container, panel);
             }
         };
-        button.setOutputMarkupId(true);
         container.add(button);
     }
 }
