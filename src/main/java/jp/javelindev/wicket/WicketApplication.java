@@ -7,6 +7,7 @@ import jp.javelindev.wicket.form.FormPage;
 import jp.javelindev.wicket.form.NextPage;
 import jp.javelindev.wicket.page.CheckerBoardPage;
 import jp.javelindev.wicket.page.Index;
+import jp.javelindev.wicket.repeat.RepeatPage;
 import jp.javelindev.wicket.resource.SimpleTextResource;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
@@ -44,6 +45,7 @@ public class WicketApplication extends WebApplication implements Rss {
         super.init();
         getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
         getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
+        getMarkupSettings().setStripWicketTags(true);
 
         getFrameworkSettings().add(new AnnotationEventDispatcher());
         mountPage("/index", Index.class);
@@ -53,6 +55,7 @@ public class WicketApplication extends WebApplication implements Rss {
         mountPage("/bookmarkable", SamplePage.class);
         mountPage("/form", FormPage.class);
         mountPage("/next", NextPage.class);
+        mountPage("/repeat", RepeatPage.class);
 
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
