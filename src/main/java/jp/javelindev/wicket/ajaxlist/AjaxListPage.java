@@ -27,6 +27,8 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.response.StringResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -35,16 +37,18 @@ import org.apache.wicket.response.StringResponse;
 public class AjaxListPage extends WebPage {
     private static final long serialVersionUID = 1L;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AjaxListPage.class);
+
     public AjaxListPage(PageParameters parameters) {
         super(parameters);
-        
+
         final RepeatingView view = new RepeatingView("item");
         add(view);
-        
+
         Label defaultLabel = new Label(view.newChildId(), "test");
         defaultLabel.setOutputMarkupId(true);
         view.add(defaultLabel);
-        
+
         add(new AjaxLink<Void>("addNew") {
             private static final long serialVersionUID = 1L;
             @Override
@@ -52,15 +56,16 @@ public class AjaxListPage extends WebPage {
                 Label newLabel = new Label(view.newChildId(), new SimpleDateFormat("HH:mm:ss").format(new Date()));
                 newLabel.setOutputMarkupId(true);
                 view.add(newLabel);
-                
+
                 Response bodyResonse = new StringResponse();
                 Response originalResponse = getResponse();
-                
+
                 getRequestCycle().setResponse(bodyResonse);
                 newLabel.render();
                 String componentString = bodyResonse.toString();
+                LOGGER.info("label: {}", componentString);
                 getRequestCycle().setResponse(originalResponse);
-                
+
                 target.appendJavaScript("$('#viewContainer').append('" + componentString + "')");
             }
         });
