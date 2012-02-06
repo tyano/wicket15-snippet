@@ -13,6 +13,7 @@ import jp.javelindev.wicket.resource.SimpleTextResource;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
+import org.apache.wicket.markup.MarkupFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -47,6 +48,9 @@ public class WicketApplication extends WebApplication implements Rss {
         getRequestCycleSettings().setResponseRequestEncoding("UTF-8");
         getMarkupSettings().setDefaultMarkupEncoding("UTF-8");
         getMarkupSettings().setStripWicketTags(true);
+
+        MarkupFactory markupFactory = new MyMarkupFactory();
+        getMarkupSettings().setMarkupFactory(markupFactory);
 
         getFrameworkSettings().add(new AnnotationEventDispatcher());
         mountPage("/index", Index.class);
