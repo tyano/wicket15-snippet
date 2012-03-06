@@ -2,6 +2,7 @@ package jp.javelindev.wicket;
 
 import jp.javelindev.wicket.ajaxlist.AjaxListPage;
 import jp.javelindev.wicket.bookmarkable.SamplePage;
+import jp.javelindev.wicket.decorator.DecoratorPage;
 import jp.javelindev.wicket.dispatcher.AnnotationEventDispatcher;
 import jp.javelindev.wicket.form.FormPage;
 import jp.javelindev.wicket.form.NextPage;
@@ -36,7 +37,7 @@ public class WicketApplication extends WebApplication implements Rss {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return MovableListPage.class;
+        return DecoratorPage.class;
     }
 
     /**
@@ -62,6 +63,7 @@ public class WicketApplication extends WebApplication implements Rss {
         mountPage("/next", NextPage.class);
         mountPage("/repeat", RepeatPage.class);
         mountPage("/movable", MovableListPage.class);
+        mountPage("/decorator", DecoratorPage.class);
 
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
