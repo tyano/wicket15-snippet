@@ -13,37 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jp.javelindev.wicket;
+package jp.javelindev.wicket.autolink;
 
-import jp.javelindev.wicket.autolink.AbstractAutoLinkPanel;
-import jp.javelindev.wicket.autolink.SimpleAutoLinkPanel;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  *
  * @author Tsutomu YANO
  */
-public class AutoLinkPage extends WebPage {
+public class SimpleAutoLinkPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
-    public AutoLinkPage(PageParameters parameters) {
-        super(parameters);
+    public SimpleAutoLinkPanel(String id, IModel<?> model) {
+        super(id, model);
+    }
+
+    public SimpleAutoLinkPanel(String id) {
+        super(id);
     }
 
     @Override
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new AbstractAutoLinkPanel("abstractPanel") {
+        add(new Label("title", new AbstractReadOnlyModel<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected String getTitle() {
-                return "サンプルパネル";
+            public String getObject() {
+                return getTitle();
             }
-        });
+        }));
 
-        add(new SimpleAutoLinkPanel("simplePanel"));
+    }
+
+    protected String getTitle() {
+        return "SimpleAutoLinkPanel";
     }
 }
