@@ -37,7 +37,7 @@ public class WicketApplication extends WebApplication implements Rss {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return DecoratorPage.class;
+        return AutoLinkPage.class;
     }
 
     /**
@@ -64,6 +64,9 @@ public class WicketApplication extends WebApplication implements Rss {
         mountPage("/repeat", RepeatPage.class);
         mountPage("/movable", MovableListPage.class);
         mountPage("/decorator", DecoratorPage.class);
+        mountPage("/autolink", AutoLinkPage.class);
+
+        getMarkupSettings().setAutomaticLinking(true);
 
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
