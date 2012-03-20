@@ -6,6 +6,7 @@ import jp.javelindev.wicket.decorator.DecoratorPage;
 import jp.javelindev.wicket.dispatcher.AnnotationEventDispatcher;
 import jp.javelindev.wicket.form.FormPage;
 import jp.javelindev.wicket.form.NextPage;
+import jp.javelindev.wicket.form2.FormPage2;
 import jp.javelindev.wicket.movablelist.MovableListPage;
 import jp.javelindev.wicket.page.CheckerBoardPage;
 import jp.javelindev.wicket.page.Index;
@@ -37,7 +38,7 @@ public class WicketApplication extends WebApplication implements Rss {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return AutoLinkPage.class;
+        return FormPage2.class;
     }
 
     /**
@@ -66,7 +67,8 @@ public class WicketApplication extends WebApplication implements Rss {
         mountPage("/decorator", DecoratorPage.class);
         mountPage("/autolink", AutoLinkPage.class);
 
-        getMarkupSettings().setAutomaticLinking(true);
+        mount(new FixedUrlMountedMapper("/fixedform", FormPage.class));
+        mount(new FixedUrlMountedMapper("/fixedform2", FormPage2.class));
 
         getSharedResources().add("simpletext", SimpleTextResource.create());
         ResourceReference reference = new SharedResourceReference("simpletext");
