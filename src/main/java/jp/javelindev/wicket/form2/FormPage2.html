@@ -22,7 +22,7 @@ limitations under the License.
     <body>
         <form wicket:id="form">
             <input type="text" wicket:id="input"/><br />
-            <input type="submit" />
+            <input wicket:id="notAjaxButton" type="submit" value="Ajaxじゃない" /><input wicket:id="ajaxButton" type="submit" value="Ajax" />
         </form>
         <div>
             <span wicket:id="label"></span>

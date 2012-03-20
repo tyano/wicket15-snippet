@@ -125,6 +125,14 @@ public class FixedUrlMountedMapper extends MountedMapper {
         return null;
     }
 
+    protected final void removeStoredPageId(Class<? extends IRequestablePage> pageClass) {
+        Session session = Session.get();
+        if (session != null && session instanceof IInitialPageIdStore) {
+            IInitialPageIdStore store = (IInitialPageIdStore) session;
+            store.removeInitialId(pageClass);
+        }
+    }
+
     /**
      * {@inheritDoc }
      * <p>
@@ -142,15 +150,22 @@ public class FixedUrlMountedMapper extends MountedMapper {
             PageParameters pageParameters = urlInfo.getPageParameters();
 
             Integer storedPageId = getStoredPageId(pageClass);
+            boolean reload = pageParameters != null && pageParameters.getNamedKeys().contains("reload");
 
             //リクエストにページIDが埋め込まれていない場合はブックマークページとして扱う。
             //さらに、ページIDストアにページIDが保存されていないことも確認し、
             //ページIDが保存済みの場合も、ブックマークページとしては扱わない。
             //processBookmarkableメソッドもオーバーライドされており、独自のPageProviderを使用している。
             //独自のPageProviderは、ページインスタンス生成時に、生成したページのページIDをページIDストアに保存する。
-            if ((info == null || info.getPageInfo().getPageId() == null) && storedPageId == null) {
+            //reloadパラメータが指定されている場合は、無条件に新規ページ作成を行う。
+            if (reload || ((info == null || info.getPageInfo().getPageId() == null) && storedPageId == null)) {
                 // if there are is no page instance information (only page map name - optionally)
                 // then this is a simple bookmarkable URL
+
+                if(reload) {
+                    pageParameters.remove("reload");
+                }
+                
                 return processBookmarkable(pageClass, pageParameters);
             } else if (((info != null && info.getPageInfo() != null && info.getPageInfo().getPageId() != null) || storedPageId != null) && 
                        (info == null || info.getComponentInfo() == null)) {
@@ -185,6 +200,12 @@ public class FixedUrlMountedMapper extends MountedMapper {
     @Override
     protected IRequestHandler processBookmarkable(Class<? extends IRequestablePage> pageClass,
             PageParameters pageParameters) {
+
+        //ページIDストアの初期化
+        //ページIDストアからこのクラスのエントリを消しておく
+        removeStoredPageId(pageClass);
+
+        //ページ生成時にページIDストアを更新するPageProviderを使用する。
         PageProvider provider = new InitialPageStorePageProvider(pageClass, pageParameters);
         provider.setPageSource(getContext());
         return new RenderPageRequestHandler(provider);

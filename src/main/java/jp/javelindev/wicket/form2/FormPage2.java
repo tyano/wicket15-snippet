@@ -18,8 +18,11 @@ package jp.javelindev.wicket.form2;
 import java.util.Date;
 import jp.javelindev.wicket.FormKey;
 import jp.javelindev.wicket.WicketSession;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
@@ -55,22 +58,37 @@ public class FormPage2 extends WebPage {
                 WicketSession session = (WicketSession) getSession();
                 session.addFormKey(key);
             }
-
-            @Override
-            protected void onSubmit() {
-                WicketSession session = (WicketSession) getSession();
-                if(!session.removeFormKey(key)) {
-                    LOGGER.info("DOUBLE SUBMIT.");
-                    throw new IllegalStateException("Double submit occurs.");
-                } else {
-                    LOGGER.info("submitted {} time(s)", ++counter);
-                }
-            }
         };
         add(form);
 
-        form.add(new TextField<String>("input", new PropertyModel<String>(this, "input")));
+        final TextField<String> text = new TextField<String>("input", new PropertyModel<String>(this, "input"));
+        form.add(text);
 
-        add(new Label("label", new PropertyModel<String>(this, "input")));
+        final Label label = new Label("label", new PropertyModel<String>(this, "input"));
+        label.setOutputMarkupId(true);
+        add(label);
+
+        form.add(new Button("notAjaxButton") {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+            }
+        });
+
+        form.add(new AjaxButton("ajaxButton", form) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                target.add(label);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+            }
+        });
+
+
     }
 }
