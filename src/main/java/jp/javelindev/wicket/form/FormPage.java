@@ -46,18 +46,21 @@ public class FormPage extends WebPage {
             @Override
             protected void onInitialize() {
                 super.onInitialize();
-                this.key = new FormKey(getPageId(), getId(), new Date());
+                LOGGER.info("onInitialize");
             }
 
             @Override
             protected void onConfigure() {
                 super.onConfigure();
+                LOGGER.info("onConfigure");
+                this.key = new FormKey(getPageId(), getId(), new Date());
                 WicketSession session = (WicketSession) getSession();
                 session.addFormKey(key);
-            }
+            } 
 
             @Override
             protected void onSubmit() {
+                LOGGER.info("onSubmit");
                 WicketSession session = (WicketSession) getSession();
                 if(!session.removeFormKey(key)) {
                     LOGGER.info("DOUBLE SUBMIT.");
@@ -71,7 +74,7 @@ public class FormPage extends WebPage {
                         // TODO 自動生成された catch ブロック
                         e.printStackTrace();
                     }
-                    setResponsePage(new NextPage(input, counter));
+//                    setResponsePage(new NextPage(input, counter));
                 }
             }
         };

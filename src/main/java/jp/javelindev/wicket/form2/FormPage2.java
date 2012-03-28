@@ -55,8 +55,15 @@ public class FormPage2 extends WebPage {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
+                LOGGER.info("form onConfigure");
                 WicketSession session = (WicketSession) getSession();
                 session.addFormKey(key);
+            }
+
+            @Override
+            protected void onSubmit() {
+                super.onSubmit();
+                LOGGER.info("onSubmit");
             }
         };
         add(form);
