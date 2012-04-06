@@ -59,7 +59,7 @@ import org.apache.wicket.util.string.Strings;
  * @author Matej Knopp
  * @author Igor Vaynberg
  */
-public final class Url implements Serializable
+public final class FixedUrl implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -117,7 +117,7 @@ public final class Url implements Serializable
 	 *            absolute or relative url with query string
 	 * @return Url object
 	 */
-	public static Url parse(final String url)
+	public static FixedUrl parse(final String url)
 	{
 		return parse(url, null);
 	}
@@ -133,11 +133,11 @@ public final class Url implements Serializable
 	 * @param charset
 	 * @return Url object
 	 */
-	public static Url parse(String url, Charset charset)
+	public static FixedUrl parse(String url, Charset charset)
 	{
 		Args.notNull(url, "url");
 
-		final Url result = new Url(charset);
+		final FixedUrl result = new FixedUrl(charset);
 
 		// the url object resolved the charset, use that
 		charset = result.getCharset();
@@ -282,7 +282,7 @@ public final class Url implements Serializable
 	/**
 	 * Construct.
 	 */
-	public Url()
+	public FixedUrl()
 	{
 	}
 
@@ -291,7 +291,7 @@ public final class Url implements Serializable
 	 * 
 	 * @param charset
 	 */
-	public Url(final Charset charset)
+	public FixedUrl(final Charset charset)
 	{
 		setCharset(charset);
 	}
@@ -303,7 +303,7 @@ public final class Url implements Serializable
 	 * @param url
 	 *            url being copied
 	 */
-	public Url(final Url url)
+	public FixedUrl(final FixedUrl url)
 	{
 		Args.notNull(url, "url");
 
@@ -318,7 +318,7 @@ public final class Url implements Serializable
 	 * @param segments
 	 * @param parameters
 	 */
-	public Url(final List<String> segments, final List<QueryParameter> parameters)
+	public FixedUrl(final List<String> segments, final List<QueryParameter> parameters)
 	{
 		this(segments, parameters, null);
 	}
@@ -329,7 +329,7 @@ public final class Url implements Serializable
 	 * @param segments
 	 * @param charset
 	 */
-	public Url(final List<String> segments, final Charset charset)
+	public FixedUrl(final List<String> segments, final Charset charset)
 	{
 		this(segments, Collections.<QueryParameter> emptyList(), charset);
 	}
@@ -341,7 +341,7 @@ public final class Url implements Serializable
 	 * @param parameters
 	 * @param charset
 	 */
-	public Url(final List<String> segments, final List<QueryParameter> parameters,
+	public FixedUrl(final List<String> segments, final List<QueryParameter> parameters,
 		final Charset charset)
 	{
 		Args.notNull(segments, "segments");
@@ -539,11 +539,11 @@ public final class Url implements Serializable
 		{
 			return true;
 		}
-		if ((obj instanceof Url) == false)
+		if ((obj instanceof FixedUrl) == false)
 		{
 			return false;
 		}
-		Url rhs = (Url)obj;
+		FixedUrl rhs = (FixedUrl)obj;
 
 		return getSegments().equals(rhs.getSegments()) &&
 			getQueryParameters().equals(rhs.getQueryParameters());
@@ -980,7 +980,7 @@ public final class Url implements Serializable
 	 * @param relative
 	 *            relative url
 	 */
-	public void resolveRelative(final Url relative)
+	public void resolveRelative(final FixedUrl relative)
 	{
 		if (getSegments().size() > 0)
 		{
@@ -1171,9 +1171,9 @@ public final class Url implements Serializable
 	 *
 	 * @return canonical url
 	 */
-	public Url canonical()
+	public FixedUrl canonical()
 	{
-		Url url = new Url(this);
+		FixedUrl url = new FixedUrl(this);
 		url.segments.clear();
 
 		for (int i = 0; i < this.segments.size(); i++)
